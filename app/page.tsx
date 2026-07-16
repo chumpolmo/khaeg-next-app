@@ -1,9 +1,29 @@
 import Image from "next/image";
+import FirstJS from "./basic/page";
+import { Profile } from "./basic/page";
 
 export default function Home() {
+
+  const message1 = () => {
+    return "Beritokai IG";
+  }
+ 
+  const message2 = (scode: any) => {
+    return "Chumpol Mokarat (" + scode + ")";
+  }
+
   return (
     <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
       <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
+        <div className="w-full flex items-center justify-center">
+          {message1()}
+        </div>
+        <div className="w-full flex items-center justify-center">
+          {message2('026899999999-9')}
+        </div>
+        <div className="flex items-center justify-center mb-8 w-full">
+          <FirstJS />
+        </div>
         <Image
           className="dark:invert"
           src="/next.svg"
