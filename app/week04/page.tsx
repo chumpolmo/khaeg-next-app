@@ -4,6 +4,8 @@ import Header from "../components/header";
 import Footer from "../components/footer";
 import { dataItem, appendItem } from "../data/dataItem";
 import { useState } from "react";
+import ToDoForm from "./components/ToDoForm";
+import Modal from "./components/Modal";
 
 export default function ToDoList(){
 
@@ -11,6 +13,13 @@ export default function ToDoList(){
   const [tasks, setTasks] = useState(toDoList);
   const [numOfTasks, setNoft] = useState(tasks.length);
   const [status, setStatus] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [selectedTask, setSelectedTask] = useState(null);
+  
+  const handleView = (task) => {
+    setSelectedTask(task);
+    setOpen(true);
+  };
 
   const filteredTasks = 
         status == null ? tasks 
@@ -31,6 +40,14 @@ export default function ToDoList(){
      return <span style={{ color: "red" }}>ไม่ได้เป็นนักศึกษาแล้วนะ</span>;
   }
 
+  const onEdit = (t) => {
+    alert(`งานที่คุณต้องการแก้ไข ${t}`);
+  }
+
+  const onDelete = (id) => {
+    alert(`คุณต้องการลบข้อมูล รหัสงาน ${id}?`);
+  }
+
   const tmpTdl = filteredTasks.map((item, index) => {
     const {id, title, desc, author, date_added, status} = item;
     return (<div className="max-w-sm p-6 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-200 w-full" key={id}>
@@ -38,17 +55,28 @@ export default function ToDoList(){
         <p className="mt-2 text-sm text-gray-600">{desc}</p>
         <p className="mt-2 text-sm text-gray-600">{author} / {date_added}</p>
         <p className="mt-2 text-sm text-gray-600">{status}</p>
+
+        <div className="flex gap-2 mt-2">
+          {/* View */}
+          <button onClick={(e)=>handleView(item)} className="bg-green-500 text-white px-3 py-1 rounded">View</button>
+
+          {/* Edit */}
+          <button onClick={(e)=>onEdit(item)} className="bg-yellow-500 text-white px-3 py-1 rounded">Edit</button>
+
+          {/* Delete */}
+          <button onClick={(e)=>onDelete(id)} className="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
+      </div>
     </div>);
   });
 
-  const addTask = () => {
+  const addTask = (title, status) => {
     const newTask = {
         id: tasks.length+1,
-        title: "ทดสอบเพิ่มงาน",
+        title: title,
         desc: "รายละเอียดของงานที่เพิ่ม",
-        date_added: "13/08/2569",
-        author: "นายทดสอบ ระบบ",
-        status: true
+        date_added: "17/08/2569",
+        author: "Beritokai",
+        status: status
     };
 
      setTasks([...tasks, newTask]);
@@ -72,7 +100,10 @@ export default function ToDoList(){
         <p className="mt-2 text-sm font-medium text-black">กลุ่มเรียน/ชั้นปี: {classSec} / {classYear}</p>
         <p className="mt-2 text-sm font-medium text-black">สถานะภาพนักศึกษา: {isActive(active)}</p>
         </div>
+
     </div>
+
+ <ToDoForm addTask={addTask} />
 
 <div className="flex items-center justify-between p-4 bg-gray-100 rounded-lg m-3">
   <div className="flex items-center gap-x-2">
@@ -81,7 +112,7 @@ export default function ToDoList(){
 </svg>
 
         <p className="text-gray-700 font-medium mt-1">จำนวนงานที่ต้องทำ {numOfTasks} รายการ</p>
-        <button onClick={addTask} className="ms-2 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">เพิ่มงาน</button>
+        {/* <button onClick={addTask} className="ms-2 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">เพิ่มงาน</button> */}
   </div>
         <div>
           <button onClick={() => setStatus(null)}
@@ -96,6 +127,15 @@ export default function ToDoList(){
     <div className="space-y-3 flex justify-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 m-3">
         {tmpTdl}
     </div>
+
+    <Modal
+      open={open}
+      onClose={() => {
+        setOpen(false);
+        setSelectedTask(null);
+      }}
+      task={selectedTask}
+    />
 
     <Footer />
     </>

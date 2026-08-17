@@ -15,7 +15,10 @@ export function ToDoPage(){
   // Declaration state variables
   const [tasks, setTasks] = useState(toDoListCombined);
   const [status, setStatus] = useState(null);
+
+  // Editing task
   const [editingTask, setEditingTask] = useState(null);
+  const resetEditingTask = () => setEditingTask(null);
 
   // Task selected for viewing
   const [selectedTask, setSelectedTask] = useState(null);
@@ -134,7 +137,12 @@ export function ToDoPage(){
       <button onClick={()=>addTask()} className='m-3 px-5 py-2 bg-lime-600 text-white text-sm font-semibold rounded-lg shadow-md hover:bg-lime-700 transition'>Add New Task</button>
     </div> */}
 
-    <ToDoForm addTask={addTask} editingTask={editingTask} updateTask={updateTask} />
+    <ToDoForm 
+      addTask={addTask} 
+      editingTask={editingTask} 
+      updateTask={updateTask} 
+      resetEditingTask={resetEditingTask}
+    />
 
     {/* To filter task by status */}
     <div className="flex gap-2 justify-center m-3">

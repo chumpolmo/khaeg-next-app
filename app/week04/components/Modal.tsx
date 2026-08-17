@@ -1,11 +1,18 @@
-import React from 'react';
+"use client";
 
-export default function Modal({ open, onClose, children }) {
+export default function Modal ({ open, onClose, task }){
+
+  if (!open || !task) {
+    return null;
+  }
+
+  const {id, title, desc, author, date_added, status} = task;
+
   return (
     <div
       onClick={onClose}
       className={`fixed inset-0 z-50 flex items-center justify-center p-4 transition-colors ${
-        open ? 'visible bg-black/40 backdrop-blur-sm' : 'invisible'
+        open ? 'visible bg-black/5 backdrop-blur-sm' : 'invisible'
       }`}
     >
       {/* Modal Container */}
@@ -20,8 +27,15 @@ export default function Modal({ open, onClose, children }) {
             <path fillRule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm7.707-3.707a1 1 0 0 0-1.414 1.414L10.586 12l-2.293 2.293a1 1 0 1 0 1.414 1.414L12 13.414l2.293 2.293a1 1 0 0 0 1.414-1.414L13.414 12l2.293-2.293a1 1 0 0 0-1.414-1.414L12 10.586 9.707 8.293Z" clipRule="evenodd"/>
           </svg>
         </button>
-        {children}
+          <h3 className="text-lg font-bold">{title}</h3>
+          <p className="text-sm text-gray-500">{desc}</p>
+          <p className="mt-2 text-sm text-gray-600">By: {author}</p>
+          <p className="mt-2 text-sm text-gray-600">Created at: {date_added}</p>
+          <small className="px-2 py-1 text-xs bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 rounded capitalize transition">
+            { status ? "Completed" : "Pending" }
+          </small>
       </div>
     </div>
   );
+
 }

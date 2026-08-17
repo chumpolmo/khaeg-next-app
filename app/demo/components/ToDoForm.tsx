@@ -2,13 +2,14 @@
 
 import { useEffect, useState } from "react";
 
-export default function ToDoForm({ addTask, editingTask, updateTask }) {
+export default function ToDoForm({ addTask, editingTask, updateTask, resetEditingTask }) {
 
   const [title, setTitle] = useState("");
   const [selectedComp, setSelectedComp] = useState(false);
 
   const handleChange = (e) => setSelectedComp(e.target.value === 'true');
 
+  // Trigger state into the dependency array
   useEffect(()=>{
     if(editingTask){
       setTitle(editingTask.title);
@@ -40,6 +41,7 @@ export default function ToDoForm({ addTask, editingTask, updateTask }) {
   const handleCancel = (e) => { 
     setTitle("");
     setSelectedComp(false);
+    resetEditingTask();
   }
 
   return (
