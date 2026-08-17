@@ -5,6 +5,7 @@ import { toDoList, updateToDoList, appendToDoList } from "../../data/toDoList";
 
 import ToDoForm from './ToDoForm';
 import ToDoList from './ToDoList';
+import ToDoDetail from './ToDoDetail';
 
 export function ToDoPage(){
 
@@ -15,6 +16,9 @@ export function ToDoPage(){
   const [tasks, setTasks] = useState(toDoListCombined);
   const [status, setStatus] = useState(null);
   const [editingTask, setEditingTask] = useState(null);
+
+  // Task selected for viewing
+  const [selectedTask, setSelectedTask] = useState(null);
 
   // Adding task in object
   const addTask = (title, completed) => {
@@ -104,6 +108,15 @@ export function ToDoPage(){
   console.log(`Name: ${name}`);
   console.log(`Major: ${major}`);
 
+  const viewTask = (task) => {
+    setSelectedTask(task);
+  };
+
+  // Close detail
+  const closeTaskDetail = () => {
+    setSelectedTask(null);
+  };
+
   return (
     <>
 
@@ -155,6 +168,50 @@ export function ToDoPage(){
         tasks={filteredTasks}
         onDelete={deleteTask}
         onEdit={editTask} 
+        onView={viewTask}
+      />
+
+      {/* Detail */}
+      {/* {selectedTask && (
+        <div className="m-3 border rounded-lg p-5 bg-gray-50">
+
+          <h2 className="text-xl font-bold mb-4">
+            Task Detail
+          </h2>
+
+          <p>
+            <strong>ID:</strong>{" "}
+            {selectedTask.id}
+          </p>
+
+          <p>
+            <strong>Title:</strong>{" "}
+            {selectedTask.title}
+          </p>
+
+          <p>
+            <strong>Description:</strong>{" "}
+            {selectedTask.desc}
+          </p>
+
+          <p>
+            <strong>Status:</strong>{" "}
+            {selectedTask.status}
+          </p>
+
+          <button
+            onClick={closeTaskDetail}
+            className="mt-4 bg-gray-600 text-white px-4 py-2 rounded"
+          >
+            Close
+          </button>
+
+        </div>
+      )} */}
+
+      <ToDoDetail
+        task={selectedTask}
+        onClose={closeTaskDetail}
       />
 
     </>

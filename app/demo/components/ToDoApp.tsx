@@ -60,6 +60,7 @@ export default function TodoApp() {
         tasks={tasks}
         onDelete={deleteTask}
         onToggle={toggleTask}
+        onView={viewTask}
       />
 
     </div>

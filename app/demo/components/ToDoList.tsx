@@ -1,6 +1,6 @@
 import ToDoItem from "./ToDoItem";
 
-export default function TodoList({ tasks, onDelete, onEdit }) {
+export default function TodoList({ tasks, onDelete, onEdit, onView }) {
 
   if (tasks.length === 0) {
     return (
@@ -19,6 +19,7 @@ export default function TodoList({ tasks, onDelete, onEdit }) {
             task={task}
             onDelete={onDelete}
             onEdit={onEdit}
+            onView={onView}
           />
         ))
       }
