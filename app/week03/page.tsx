@@ -23,7 +23,7 @@ export default function ToDoList(){
         <p className="mt-2 text-sm text-gray-600"></p>
         <p className="mt-2 text-sm text-gray-600">{item.desc}</p>
         <p className="mt-2 text-sm text-gray-600">{item.author} / {item.date_added}</p>
-        <p className="mt-2 text-sm text-gray-600">{item.status}</p>
+        <p className="mt-2 text-sm text-gray-600">{isActive(item.status)}</p>
     </div>
   );
 

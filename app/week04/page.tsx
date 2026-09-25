@@ -13,8 +13,14 @@ export default function ToDoList(){
   const [tasks, setTasks] = useState(toDoList);
   const [numOfTasks, setNoft] = useState(tasks.length);
   const [status, setStatus] = useState(null);
+  
+  // ToDoList View
   const [open, setOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
+
+  const [editingTask, setEditingTask] = useState(null);
+
+  const resetEditingTask = () => setEditingTask(null);
   
   const handleView = (task) => {
     setSelectedTask(task);
@@ -41,11 +47,30 @@ export default function ToDoList(){
   }
 
   const onEdit = (t) => {
-    alert(`งานที่คุณต้องการแก้ไข ${t}`);
+    //alert(`งานที่คุณต้องการแก้ไข ${t}`);
+    setEditingTask(t);
   }
 
+  const updateTask = (id, title, status) => {
+     setTasks(
+       tasks => tasks.map(
+        t => t.id === id ?
+          {  
+            ...t, 
+            title: title,
+            status: status
+          } : t
+       ));
+       setEditingTask(null);
+  }
+
+
   const onDelete = (id) => {
-    alert(`คุณต้องการลบข้อมูล รหัสงาน ${id}?`);
+    //alert(`คุณต้องการลบข้อมูล รหัสงาน ${id}?`);
+    const updateTasks = tasks.filter(
+      item => item.id != id 
+    );
+    setTasks(updateTasks);
   }
 
   const tmpTdl = filteredTasks.map((item, index) => {
@@ -103,7 +128,12 @@ export default function ToDoList(){
 
     </div>
 
- <ToDoForm addTask={addTask} />
+    <ToDoForm 
+       addTask={addTask}
+       editingTask={editingTask}
+       updateTask={updateTask}
+       resetEditingTask={resetEditingTask}
+    />
 
 <div className="flex items-center justify-between p-4 bg-gray-100 rounded-lg m-3">
   <div className="flex items-center gap-x-2">
@@ -130,10 +160,12 @@ export default function ToDoList(){
 
     <Modal
       open={open}
-      onClose={() => {
-        setOpen(false);
-        setSelectedTask(null);
-      }}
+      onClose={
+        () => {
+          setOpen(false);
+          setSelectedTask(null);
+        }
+      }
       task={selectedTask}
     />
 

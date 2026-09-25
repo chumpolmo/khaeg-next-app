@@ -1,15 +1,27 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function ToDoForm({ addTask }){
+export default function ToDoForm({ addTask, editingTask, updateTask, resetEditingTask }){
 
    const [title, setTitle] = useState('');
    const [taskStatus, setTaskStatus] = useState(false);
 
+   useEffect(()=>{
+      if(editingTask){
+         const { title, status } = editingTask;
+         setTitle(title);
+         setTaskStatus(status);
+      }else{
+         setTitle('');
+         setTaskStatus(false);
+      }
+   }, [editingTask]);
+
    const handleCancel = (e) => {
       setTitle('');
       setTaskStatus(false);
+      resetEditingTask();
    }
 
    const handleSubmit = (e) => {
@@ -17,7 +29,10 @@ export default function ToDoForm({ addTask }){
 
       if(!title.trim()) return;
 
-      addTask(title, taskStatus);
+      if(editingTask)
+        updateTask(editingTask.id, title, taskStatus);
+      else
+        addTask(title, taskStatus);
 
       handleCancel;
    }

@@ -2,13 +2,26 @@
   "name": "khaeg-next-app",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "api": "node ./server/khaegApi.js"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "body-parse": "^0.1.0",
+    "body-parser": "^2.3.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "firebase": "^12.19.0",
+    "firebase-admin": "^14.5.0",
+    "fs": "^0.0.1-security",
+    "json": "^11.0.0",
+    "jsonwebtoken": "^9.0.3",
     "next": "16.2.10",
     "react": "19.2.4",
     "react-dom": "19.2.4"
@@ -20,7 +33,21 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.10",
+    "nodemon": "^3.1.14",
     "tailwindcss": "^4",
     "typescript": "^5"
-  }
+  },
+  "description": "Class: Web Programming By: Chumpol Mokarat",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chumpolmo/khaeg-next-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chumpolmo/khaeg-next-app/issues"
+  },
+  "homepage": "https://github.com/chumpolmo/khaeg-next-app#readme"
 }
